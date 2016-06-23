@@ -34,7 +34,7 @@ function markCell(evt) {
 function getRow(element) {
   var list = element.classList;
     for (var n = 0; n < list.length; n++) {
-      if ((list[n].contains('row-')) && (list[n].contains('col-'))) {
+      if (list[n].contains('row-') && list[n].contains('col-')) {
         return (parseInt(list[n].charAt(4)));
    }
  }
@@ -43,7 +43,7 @@ function getRow(element) {
 function getCol(element) {
   var list = element.classList;
     for (var n = 0; n < list.length; n++) {
-      if ((list[n].contains('row-')) && (list[n].contains('col-'))) {
+      if (list[n].contains('row-') && list[n].contains('col-')) {
          return (parseInt(list[n].charAt(10)));
    }
  }
