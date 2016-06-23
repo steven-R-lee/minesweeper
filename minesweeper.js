@@ -34,8 +34,8 @@ function markCell(evt) {
 function getRow(element) {
   var list = element.classList;
     for (var n = 0; n < list.length; n++) {
-      if (list[n].contains('row-') && list[n].contains('col-')) {
-        return (parseInt(list[n].charAt(4)));
+      if (list[n].includes('row-')) {
+        return (parseInt(list[n].split('row-')));
    }
  }
 }
@@ -43,15 +43,17 @@ function getRow(element) {
 function getCol(element) {
   var list = element.classList;
     for (var n = 0; n < list.length; n++) {
-      if (list[n].contains('row-') && list[n].contains('col-')) {
-         return (parseInt(list[n].charAt(10)));
+      if (list[n].includes('col-')) {
+        return (parseInt(list[n].split('col-')));
    }
  }
 }
 
 function addCellToBoard(element) {
   var newCell = {};
-  newCell.row = getRow(element);
-  newCell.col = getCol(element);
-  newCell.isMine = element.classList.contains('mine');
+    newCell.row = getRow(element);
+    newCell.col = getCol(element);
+    newCell.isMine = element.classList.contains('mine');
+
+board.cells.push(newCell);
 }
