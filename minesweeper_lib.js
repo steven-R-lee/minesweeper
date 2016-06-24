@@ -8,11 +8,8 @@ function getSurroundingCells (row, col) {
     .filter(function (cell) {
       return columns.includes(cell.col) && rows.includes(cell.row)
     })
-    .filter(function (cell) {
-      return !(cell.row === row && cell.col === col)
-    })
 }
-
+​
 // For the given DOM element, displays surrounding mine counts
 // under the following conditions:
 //  - cell is not a mine
@@ -28,7 +25,7 @@ function showSurrounding (element) {
     })
     .forEach(setInnerHTML)
 }
-
+​
 // For the given cell object, set innerHTML to cell.surroundingMines
 // under the following conditions:
 //  - cell has not been marked by the user
@@ -46,26 +43,27 @@ function setInnerHTML (cell) {
   if (element.classList.contains('marked')) {
     return
   }
+  element.innerHTML = cell.surroundingMines > 0 ? 
+    cell.surroundingMines : ''
   if (element.classList.contains('hidden')) {
     element.classList.remove('hidden')
     if (cell.surroundingMines === 0) {
       return showSurrounding(element)
     }
-    element.innerHTML = cell.surroundingMines
   }
 }
-
+​
 function getRange(begin, end) {
   return Array.apply(begin, Array(end - begin + 1))
     .map(function (n, i) {
       return begin + i
     })
 }
-
+​
 function getLowerBound (n) {
   return n - 1 < 0 ? 0 : n -1
 }
-
+​
 function getUpperBound (n) {
   var limit = board.MAX_CELLS-1 || 4
   return n + 1 > limit ? limit : n + 1
