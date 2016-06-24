@@ -20,14 +20,13 @@ function startGame () {
 
 
 function addListeners(element) {
-  for (var m = 0; m < element.length; m++) {
-    element[m].addEventListener('click', showCell);
-    element[m].addEventListener('contextmenu', markCell);
+    element.addEventListener('click', showCell);
+    element.addEventListener('contextmenu', markCell);
   }
-}
 
 function showCell(evt) {
   evt.target.classList.remove('hidden');
+  showSurrounding(evt.target);
 }
 
 function markCell(evt) {
@@ -39,7 +38,8 @@ function getRow(element) {
   var list = element.classList;
     for (var n = 0; n < list.length; n++) {
       if (list[n].includes('row-')) {
-        return (parseInt(list[n].split('row-')));
+        var classNameParts = parseInt(list[n].split('-'));
+        return parseInt(classNameParts[1]);
    }
  }
 }
@@ -48,7 +48,8 @@ function getCol(element) {
   var list = element.classList;
     for (var n = 0; n < list.length; n++) {
       if (list[n].includes('col-')) {
-        return (parseInt(list[n].split('col-')));
+        var classNameParts = parseInt(list[n].split('-'));
+        return parseInt(classNameParts[1]);
    }
  }
 }
