@@ -25,13 +25,52 @@ function addListeners(element) {
   }
 
 function showCell(evt) {
+  var targetEvt = event.target.classList;
+    if(targetEvt.includes(mine)) {
+      showAllMines();
+      alert('You Are A Loser!');
+      return restart();
+    }
+    else
+    {
   evt.target.classList.remove('hidden');
   showSurrounding(evt.target);
+  checkForWin();
 }
 
 function markCell(evt) {
   evt.preventDefault();
   evt.target.classList.toggle('marked');
+  evt.target.classList.toggle('hidden');
+
+  for (var m = 0; m < board.cells.length; n++) {
+    if(board.cells[m].row === getRow(event.target) && 
+      board.cells[m].col === getCol(event.target)) {
+        board.cells[m].isMarked = true;
+    }
+  }
+}
+
+function checkForWin() {
+  var mineswept= document.getElementsByClassName('board')[0].children;
+  var maximumMines = 0;
+    for(var m = 0; m < board.cells.length; m++) {
+      if(board.cells[m].isMine && board.cells[m].isMarked) {
+        maximumMines = maximumMines + 1;
+      }
+      else if (!board.cells[m].isMine && board.cells[m].isMarked) {
+        maximumMines = maximumMines + 1;
+      }
+    }
+    if (maximumMines === 5) {
+      for (var n = 0; n < mineswept.length; n++) {
+        if(mineswept[n].classList.includes('hidden')) {
+          return;
+        }
+        alert('Your Are A Winner!');
+        return restart();
+      }
+    }
 }
 
 function getRow(element) {
@@ -58,7 +97,7 @@ function addCellToBoard(element) {
   var newCell = {};
     newCell.row = getRow(element);
     newCell.col = getCol(element);
-    newCell.isMine = element.classList.contains('mine');
+    newCell.isMine = element.classList.includes('mine');
 
 board.cells.push(newCell);
 }
@@ -72,4 +111,17 @@ function countMines(cell) {
       }
     }
     return count;
+}
+
+function showAllMines() {
+  var mineswept= document.getElementsByClassName('board')[0].children;
+    for(var n = 0; n < mineswept.length; n++) {
+      if (mineswept[n].classList.includes('mine')) {
+        mineswept[n].classList.remove('hidden');
+      }
+    }
+}
+
+function reload() {
+  location.reload();
 }
